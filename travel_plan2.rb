@@ -1,10 +1,11 @@
-plans =[
+def choose_plan
+  plans =[
   {place: "沖縄旅行", price: 10000},
   {place: "北海道旅行", price: 20000},
-  {place: "九州旅行", price: 15000}
-]
+  {place: "九州旅行", price: 15000},
+  {place: "宇宙旅行", price: 30000}
+  ]
 
-def choose_plan(plans)
   puts "プランを選択"
   plans.each.with_index(1) do |plan, i|
     puts " #{i} #{plan[:place]} #{plan[:price]}円"
@@ -13,16 +14,15 @@ def choose_plan(plans)
   print "\n番号を選んでください>>"
   selected_num = gets.to_i
   puts "\n"
-  loop do   
-    # selected_numが1,2,3ではない場合もう一度選んでもらいます。
-    if selected_num >= 4 || selected_num <= 0  
-      print "1,2,3の中で選んでください>>"
-      selected_num = gets.to_i
-    else
-      puts "#{plans[selected_num - 1][:place]}選択しました。"    
-    break
-    end
+
+  loop do
+    # selected_numがplans配列の要素の数より小さいか同じであればLoopを抜けます。
+    break if selected_num >= 1 && selected_num <= plans.length
+    print "1から#{plans.length}の中で選んでください>>"
+    selected_num = gets.to_i
   end
+
+  puts "#{plans[selected_num - 1][:place]}選択しました。"
   return plans[selected_num - 1]
 end
 
@@ -31,14 +31,11 @@ def how_many_people
   people_num = gets.to_i
   puts "\n"
   loop do
-    if people_num <= 0
+    break if people_num >= 1
       print "1名以上を入力してください>>"
       people_num = gets.to_i
-    else      
-      puts "全員で#{people_num}名ですね。"      
-    break
-    end
   end
+  puts "全員で#{people_num}名ですね。"      
   return people_num
 end
 
@@ -52,7 +49,7 @@ def total_price(choosed_plan, people_num)
   end
 end
 
-choosed_plan = choose_plan(plans)
+choosed_plan = choose_plan
 people_num = how_many_people
 total_price(choosed_plan, people_num)
 
